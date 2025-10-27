@@ -1,6 +1,7 @@
 const TMDb_API_KEY = 'fc38c65b5f4c1d45172b91795007eed2'; 
 
-const input = document.getElementById('searchInput'); 
+
+const input = document.getElementById('searchInput');
 const button = document.getElementById('searchBtn'); 
 const container = document.getElementById('resultsContainer'); 
 
@@ -13,8 +14,12 @@ button.addEventListener('click', () => {
     }
 });
 
-
+/**
+ * Function to perform the search using the TMDb API.
+ * @param {string} term - The search query.
+ */
 async function searchMoviesTMDb(term) {
+
     const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(term)}&api_key=${TMDb_API_KEY}`;
     container.innerHTML = 'Loading results...';
 
@@ -31,13 +36,16 @@ async function searchMoviesTMDb(term) {
 
     } catch (error) {
         container.innerHTML = '<p class="message error">Error connecting to TMDb API. Please check the console for details.</p>';
-        console.error("Error with TMDb API:", error);
     }
 }
 
-
+/**
+ * Function to process and display the JSON response from TMDb.
+ * @param {Object} data - The JSON response object from the API.
+ */
 function displayTMDbResults(data) {
     container.innerHTML = ''; 
+    
     
     if (data.results && data.results.length > 0) {
         data.results.forEach(movie => {
@@ -63,5 +71,4 @@ function displayTMDbResults(data) {
     } else {
         container.innerHTML = `<p class="message">No results found for "${input.value}" on TMDb.</p>`;
     }
-
 }
